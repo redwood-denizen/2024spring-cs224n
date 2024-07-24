@@ -1,0 +1,22 @@
+3a) i
+error type: verb phrase assignment error
+incorrect dependency: acquisition -> citing
+correct dependency: blocked -> citing
+
+3a) ii
+error type: modifier attachment error
+incorrect dependency: elements -> most
+correct dependency: crucial -> most
+
+3a) iii
+error type: prepositional phrase attachment error
+incorrect dependency: declined -> decision
+correct dependency: decision -> reasons
+
+
+3a) iv
+error type: coordination attachment error
+incorrect dependency: affects -> one
+correct dependency: plants -> one
+
+

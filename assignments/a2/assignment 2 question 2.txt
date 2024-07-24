@@ -1,0 +1,15 @@
+2 a) i
+using m smooths out noise in the updates and acts like friction.
+this can help learning, for example slowing the updates to stop at minima rather than bouncing back and forth.
+
+2 a) ii
+model parameters with lower gradient variance that are changing slowly will get larger updates.
+this might help with learning by speeding it up by increasing changes to slowly changing parameters.
+
+2 b) i
+gamma must be 1/(1-pdrop) since the expectation is gamma times (1-pdrop) times hi times 1 plus gamma times pdrop times hi times 0.
+
+2 b) ii
+dropout should be applied during training in order to reduce overfitting by breaking up coadapting units.
+dropout should not be applied during testing because it samples exponentially many sparse thinned networks giving their
+expected value.

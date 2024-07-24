@@ -1,0 +1,1 @@
+2n: n shifts to empty beta (the buffer) adding n entries to sigma (the stack) and n ARCs to empty the stack.

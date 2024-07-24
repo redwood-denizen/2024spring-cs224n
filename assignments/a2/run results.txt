@@ -6,3 +6,16 @@ New best dev UAS! Saving model.
 
 with debug off...
 
+Average Train Loss: 0.06731331486706481
+Evaluating on dev set
+1445850it [00:00, 35157600.08it/s]
+- dev UAS: 88.69
+New best dev UAS! Saving model.
+
+================================================================================
+TESTING
+================================================================================
+Restoring the best model weights found on the dev set
+Final evaluation on test set
+2919736it [00:00, 49992082.04it/s]
+- test UAS: 89.00
