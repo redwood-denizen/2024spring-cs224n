@@ -34,7 +34,7 @@ class PartialParse(object):
         ###       reference the sentence object.  That is, remember to NOT modify the sentence object. 
 
         self.stack = ["ROOT"]
-        self.buffer = sentence[:]
+        self.buffer = self.sentence[:]
         self.dependencies = []
 
         ### END YOUR CODE
@@ -56,14 +56,15 @@ class PartialParse(object):
         ###         3. Right Arc
 
         if transition == "S":
-            self.stack = self.stack.append(self.buffer[0])
+            self.stack.append(self.buffer[0])
             self.buffer = self.buffer[1:]
         if transition == "LA":
-            self.dependencies = self.dependencies.append(self.stack[-1],self.stack[-2])
-            self.stack = self.stack[0:-2].append(self.stack[-1])
+            self.dependencies.append((self.stack[-1], self.stack[-2]))
+            self.stack = self.stack[0:-2] + [self.stack[-1]]
         if transition == "RA":
-            self.dependencies = self.dependencies.append(self.stack[-2],self.stack[-1])
+            self.dependencies.append((self.stack[-2], self.stack[-1]))
             self.stack = self.stack[0:-1]
+        return
 
         ### END YOUR CODE
 
@@ -115,10 +116,32 @@ def minibatch_parse(sentences, model, batch_size):
     ###             to remove objects from the `unfinished_parses` list. This will free the underlying memory that
     ###             is being accessed by `partial_parses` and may cause your code to crash.
 
-    self.partial_parses = sentences
-    self.unfinished_parses = self.partial_parses[:]
-    while self.unfinished_parses is not []:
-        
+    print("sentences = ", sentences)
+    partial_parses = [PartialParse(sentence) for sentence in sentences]
+    unfinished_parses = partial_parses[:]
+    print("batch_size = ", batch_size)
+    while unfinished_parses != []:
+        minibatch = unfinished_parses[0:batch_size]
+        print("minibatch = ", minibatch)
+        for pp in minibatch:
+            print()
+            print("   pp.buffer = ", pp.buffer)
+            print("   pp.stack = ", pp.stack)
+            print("   pp.dependencies = ", pp.dependencies)
+        transitions = model.predict(minibatch)
+        print("transitions = ", transitions)
+        for pp, transition in zip(minibatch, transitions):
+            print()
+            print("   pp.buffer = ", pp.buffer)
+            print("   pp.stack = ", pp.stack)
+            print("   pp.dependencies = ", pp.dependencies)
+            print("   transition = ", transition)
+            pp.parse_step(transition)
+        unfinished_parses = [pp for pp in unfinished_parses if not (pp.buffer == [] and
+                                                                    len(pp.stack) == 1)]  # pp.stack == ["ROOT"])]
+        print("unfinished_parses = ", unfinished_parses)
+    print("DONE")
+    dependencies = [pp.dependencies for pp in partial_parses]
 
     ### END YOUR CODE
 
