@@ -1,0 +1,2 @@
+lxml==5.0.2 changed from 5.0.0 due to failure to build lxml on macosx
+see https://bugs.launchpad.net/lxml/+bug/2045435
