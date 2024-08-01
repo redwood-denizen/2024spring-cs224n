@@ -127,9 +127,13 @@ class VocabEntry(object):
 
         @returns sents_var: tensor of (max_sentence_length, batch_size)
         """
-        word_ids = self.words2indices(sents)
-        sents_t = pad_sents(word_ids, self['<pad>'])
-        sents_var = torch.tensor(sents_t, dtype=torch.long, device=device)
+        # PaulO pad_sents expects strings, not ints
+        # word_ids = self.words2indices(sents)
+        # sents_t = pad_sents(word_ids, self['<pad>'])
+        # sents_var = torch.tensor(sents_t, dtype=torch.long, device=device)
+        sents_t = pad_sents(sents, '<pad>')
+        word_ids = self.words2indices(sents_t)
+        sents_var = torch.tensor(word_ids, dtype=torch.long, device=device)
         return torch.t(sents_var)
 
     @staticmethod

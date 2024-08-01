@@ -23,6 +23,7 @@ nltk.download('punkt')
 
 
 def pad_sents(sents, pad_token):
+    # PaulO: The signatures below are incorrect. This is called with int word indices
     """ Pad list of sentences according to the longest sentence in the batch.
         The paddings should be at the end of each sentence.
     @param sents (list[list[str]]): list of sentences, where each sentence
@@ -36,7 +37,11 @@ def pad_sents(sents, pad_token):
 
     ### YOUR CODE HERE (~6 Lines)
 
-
+    sentences = sents.copy()
+    max_length = max(len(s) for s in sentences)
+    for s in sentences:
+        s.extend([pad_token] * (max_length - len(s)))
+        sents_padded.append(s)
 
     ### END YOUR CODE
 
