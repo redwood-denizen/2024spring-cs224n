@@ -366,16 +366,6 @@ class NMT(nn.Module):
         e_t = torch.squeeze(torch.bmm(torch.unsqueeze(dec_hidden, 1), torch.permute(enc_hiddens_proj, (0, 2, 1))), 1)
         print(f'e_t.shape (b, tgt_len): {e_t.shape}')
 
-        batch_size = dec_hidden.size(0)
-        src_len = enc_hiddens.size(1)
-        # e_t = torch.zeros(batch_size, src_len)
-        for i in range(src_len):
-            # this should be a scalar or (b, 1). dec_hidden should be transposed?
-            # e_t[i] = torch.squeeze(torch.bmm(torch.unsqueeze(dec_hidden, 1), torch.unsqueeze(enc_hiddens_proj[:,i, :], 2)))
-            for b in range(batch_size):
-                # e_t[b, i] = torch.t(dec_hidden[b]) @ enc_hiddens_proj[b, i]
-                print(f'e_t[b, i].shape (scalar): {e_t[b, i].shape}')
-        print(f'e_t.shape (b, tgt_len): {e_t.shape}')
         ### END YOUR CODE
 
         # Set e_t to -inf where enc_masks has 1
@@ -409,17 +399,12 @@ class NMT(nn.Module):
         ###     Tanh:
         ###         https://pytorch.org/docs/stable/generated/torch.tanh.html
 
-        alpha_t = F.softmax(e_t, dim=1)
-        print(f'alpha_t.shape: {alpha_t.shape}')
-        print(f'enc_hiddens.shape: {enc_hiddens.shape}')
-        # a_t = torch.t(alpha_t) @ enc_hiddens # ??? dot product?
-        a_t = torch.zeros(batch_size, enc_hiddens.size(-1))  # (b, 2h)
-        for b in range(batch_size):
-            for i in range(src_len):
-                print(f'alpha_t[b,i].shape: {alpha_t[b,i].shape}')
-                print(f'enc_hiddens[b,i] shape: {enc_hiddens[b,i].shape}')
-                print(f'addend.shape: {(alpha_t[b, i] * enc_hiddens[b, i]).shape}')
-                a_t[b] += alpha_t[b, i] * enc_hiddens[b, i]
+        alpha_t = F.softmax(e_t, dim=1)  # (b, src_len)
+        print(f'alpha_t.shape (b, src_len): {alpha_t.shape}')
+        print(f'enc_hiddens.shape (b, src_len, 2h): {enc_hiddens.shape}')
+
+        a_t = torch.squeeze(torch.bmm(torch.unsqueeze(alpha_t, 1), enc_hiddens), 1)  # (b, 2h)
+
         print('a_t.shape (b, 2h):', a_t.shape)
         print('a_t:', a_t)
         print(f'dec_hidden.shape (b, h): {dec_hidden.shape}')
