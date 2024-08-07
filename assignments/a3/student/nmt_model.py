@@ -360,21 +360,20 @@ class NMT(nn.Module):
         dec_state = self.decoder(Ybar_t, dec_state)
 
         (dec_hidden, dec_cell) = dec_state  # (b, h)
-        
+
+        print(f'dec_hidden.shape: {dec_hidden.shape}')
+        print(f'enc_hiddens_proj.shape: {enc_hiddens_proj.shape}')
+        e_t = torch.squeeze(torch.bmm(torch.unsqueeze(dec_hidden, 1), torch.permute(enc_hiddens_proj, (0, 2, 1))), 1)
+        print(f'e_t.shape (b, tgt_len): {e_t.shape}')
+
         batch_size = dec_hidden.size(0)
         src_len = enc_hiddens.size(1)
-        e_t = torch.zeros(batch_size, src_len)
+        # e_t = torch.zeros(batch_size, src_len)
         for i in range(src_len):
-            # print(f'i:{i}')
-            # print('torch.bmm(torch.unsqueeze(dec_hidden, 1), torch.unsqueeze(enc_hiddens_proj[:,i, :], 2)).size:')
-            # print(torch.bmm(torch.unsqueeze(dec_hidden, 1), torch.unsqueeze(enc_hiddens_proj[:,i, :], 2)).size)
             # this should be a scalar or (b, 1). dec_hidden should be transposed?
             # e_t[i] = torch.squeeze(torch.bmm(torch.unsqueeze(dec_hidden, 1), torch.unsqueeze(enc_hiddens_proj[:,i, :], 2)))
             for b in range(batch_size):
-                print(f'dec_hidden[b].shape: {dec_hidden[b].shape}')
-                print(f'enc_hiddens_proj[b, i].shape: {enc_hiddens_proj[b, i].shape}')
-                # e_t[b, i] = torch.unsqueeze(torch.t(dec_hidden[b]), 0) @ torch.unsqueeze(enc_hiddens_proj[b, i], 1)
-                e_t[b, i] = torch.t(dec_hidden[b]) @ enc_hiddens_proj[b, i]
+                # e_t[b, i] = torch.t(dec_hidden[b]) @ enc_hiddens_proj[b, i]
                 print(f'e_t[b, i].shape (scalar): {e_t[b, i].shape}')
         print(f'e_t.shape (b, tgt_len): {e_t.shape}')
         ### END YOUR CODE
