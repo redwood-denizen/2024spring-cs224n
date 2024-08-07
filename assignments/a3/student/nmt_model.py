@@ -285,65 +285,24 @@ class NMT(nn.Module):
         ###     Tensor Stacking:
         ###         https://pytorch.org/docs/stable/generated/torch.stack.html
 
-        src_len = enc_hiddens.size(1)
-        ### TODO:
-        ###     1. Apply the attention projection layer to `enc_hiddens` to obtain `enc_hiddens_proj`,
-        ###         which should be shape (b, src_len, h),
-        ###         where b = batch size, src_len = maximum source length, h = hidden size.
-        ###         This is applying W_{attProj} to h^enc, as described in the PDF.
-        ###
-        print(f'enc_hiddens.shape (b, src_len, h*2): {enc_hiddens.shape}')
-        enc_hiddens_proj = self.att_projection(enc_hiddens)
-        print(f'enc_hiddens_proj.shape (b, src_len, h): {enc_hiddens_proj.shape}')
+        enc_hiddens_proj = self.att_projection(enc_hiddens)  # (b, src_len, h)
 
-        ### TODO:
-        ###     2. Construct tensor `Y` of target sentences with shape (tgt_len, b, e) using the target model embeddings.
-        ###         where tgt_len = maximum target sentence length, b = batch size, e = embedding size.
-
-        print(f'target_padded.shape: {target_padded.shape}')
-        print(f'target_padded: {target_padded}')
-        Y = self.model_embeddings.target(target_padded)
-        print(f'Y.shape (tgt_len, b, e): {Y.shape}')
-        print(f'Y: {Y}')
-
-        ### TODO:
-        ###     3. Use the torch.split function to iterate over the time dimension of Y.
-        ###         Within the loop, this will give you Y_t of shape (1, b, e) where b = batch size, e = embedding size.
-        ###             - Squeeze Y_t into a tensor of dimension (b, e).
-        ###             - Construct Ybar_t by concatenating Y_t with o_prev on their last dimension
-        ###             - Use the step function to compute the the Decoder's next (cell, state) values
-        ###               as well as the new combined output o_t.
-        ###             - Append o_t to combined_outputs
-        ###             - Update o_prev to the new o_t.
+        Y = self.model_embeddings.target(target_padded)  # (tgt_len, b, e)
 
         for Y_t in torch.split(Y,1):  # (1, b, e)
-            print(f'Y_t.shape (1, b, e) = {Y_t.shape}')
             Y_t = torch.squeeze(Y_t, dim=0)  # (b, e)
-            print(f'Y_t.shape (b, e) = {Y_t.shape}')
             Ybar_t = torch.cat((Y_t, o_prev), dim=-1)  # (b, e + h)
-            print(f'Ybar_t.size (b, e + h): {Ybar_t}')
-            print(f'Ybar_t: {Ybar_t}')
-            print(f'dec_state before decoder step: {dec_state}')
-
-            dec_state, combined_output, e_t = self.step(Ybar_t, dec_state, enc_hiddens, enc_hiddens_proj, enc_masks)
-
+            dec_state, combined_output, e_t = self.stepp(Ybar_t, dec_state, enc_hiddens, enc_hiddens_proj, enc_masks)
             combined_outputs.append(combined_output)
             o_prev = combined_output
 
-        ### TODO:
-        ###     4. Use torch.stack to convert combined_outputs from a list length tgt_len of
-        ###         tensors shape (b, h), to a single tensor shape (tgt_len, b, h)
-        ###         where tgt_len = maximum target sentence length, b = batch size, h = hidden size.
-
         combined_outputs = torch.stack(combined_outputs)
-        print(f'combined_outputs.shape: {combined_outputs.shape}')
-        # print(f'combined_outputs: {combined_outputs}')
 
         ### END YOUR CODE
 
         return combined_outputs
 
-    def step(self, Ybar_t: torch.Tensor,
+    def stepp(self, Ybar_t: torch.Tensor,
              dec_state: Tuple[torch.Tensor, torch.Tensor],
              enc_hiddens: torch.Tensor,
              enc_hiddens_proj: torch.Tensor,
@@ -395,34 +354,34 @@ class NMT(nn.Module):
         ###     Tensor Squeeze:
         ###         https://pytorch.org/docs/stable/generated/torch.squeeze.html
 
+        print('STEP'*20)
+        # x = 1/0
 
         dec_state = self.decoder(Ybar_t, dec_state)
-        print(f'dec_state after: {dec_state}')
-        h_t_dec = dec_state[0]
-        print(f'h_t_dec: {h_t_dec}')
-        print(f'h_t_dec.shape (b, h): {h_t_dec.shape}')
-        print(f'enc_hiddens_proj.shape (b, src_len, h): {enc_hiddens_proj.shape}')
-        # e_t = torch.t(h_t_dec) @ enc_hiddens_proj
+
+        (dec_hidden, dec_cell) = dec_state  # (b, h)
+        
+        batch_size = dec_hidden.size(0)
+        src_len = enc_hiddens.size(1)
         e_t = torch.zeros(batch_size, src_len)
         for i in range(src_len):
-            # print(f'h_t_dec.shape (b, h): {h_t_dec.shape}')
-            # print(f'enc_hiddens_proj[:,i, :]: {enc_hiddens_proj[:,i, :]}')
-            # print(f'enc_hiddens_proj[:,i, :].shape: {enc_hiddens_proj[:,i, :].shape}')
-            # TODO: this should be a scalar or (b, 1) and h_t_dec should be transposed?
-            # e_t[i] = torch.squeeze(torch.bmm(torch.unsqueeze(h_t_dec, 1), torch.unsqueeze(enc_hiddens_proj[:,i, :], 2)))
+            # print(f'i:{i}')
+            # print('torch.bmm(torch.unsqueeze(dec_hidden, 1), torch.unsqueeze(enc_hiddens_proj[:,i, :], 2)).size:')
+            # print(torch.bmm(torch.unsqueeze(dec_hidden, 1), torch.unsqueeze(enc_hiddens_proj[:,i, :], 2)).size)
+            # this should be a scalar or (b, 1). dec_hidden should be transposed?
+            # e_t[i] = torch.squeeze(torch.bmm(torch.unsqueeze(dec_hidden, 1), torch.unsqueeze(enc_hiddens_proj[:,i, :], 2)))
             for b in range(batch_size):
-                print(f'h_t_dec[b].shape: {h_t_dec[b].shape}')
+                print(f'dec_hidden[b].shape: {dec_hidden[b].shape}')
                 print(f'enc_hiddens_proj[b, i].shape: {enc_hiddens_proj[b, i].shape}')
-                # e_t[b, i] = torch.unsqueeze(torch.t(h_t_dec[b]), 0) @ torch.unsqueeze(enc_hiddens_proj[b, i], 1)
-                e_t[b, i] = torch.t(h_t_dec[b]) @ enc_hiddens_proj[b, i]
-            print(f'e_t[b, i].shape (scalar): {e_t[b, i].shape}')
+                # e_t[b, i] = torch.unsqueeze(torch.t(dec_hidden[b]), 0) @ torch.unsqueeze(enc_hiddens_proj[b, i], 1)
+                e_t[b, i] = torch.t(dec_hidden[b]) @ enc_hiddens_proj[b, i]
+                print(f'e_t[b, i].shape (scalar): {e_t[b, i].shape}')
         print(f'e_t.shape (b, tgt_len): {e_t.shape}')
-        print(f'e_t (b, tgt_len): {e_t}')
         ### END YOUR CODE
 
         # Set e_t to -inf where enc_masks has 1
         if enc_masks is not None:
-            e_t.data.masked_fill_(enc_masks.bool(), -float('inf'))
+             e_t.data.masked_fill_(enc_masks.bool(), -float('inf'))
 
         ### YOUR CODE HERE (~6 Lines)
         ### TODO:
@@ -464,18 +423,18 @@ class NMT(nn.Module):
                 a_t[b] += alpha_t[b, i] * enc_hiddens[b, i]
         print('a_t.shape (b, 2h):', a_t.shape)
         print('a_t:', a_t)
-        print(f'h_t_dec.shape (b, h): {h_t_dec.shape}')
-        print(f'h_t_dec: {h_t_dec}')
-        u_t = torch.cat((a_t, h_t_dec), 1)
+        print(f'dec_hidden.shape (b, h): {dec_hidden.shape}')
+        print(f'dec_hidden: {dec_hidden}')
+        u_t = torch.cat((a_t, dec_hidden), 1)
         print('u_t.shape (b, 3h):', u_t.shape)
         v_t = self.combined_output_projection(u_t)
         print('v_t.shape (b, h):', v_t.shape)
-        O_t = self.dropout(F.tanh(v_t))
-        print('O_t.shape (b, h):', O_t.shape)
+        o_t = self.dropout(F.tanh(v_t))
+        print('o_t.shape (b, h):', o_t.shape)
 
         ### END YOUR CODE
 
-        combined_output = O_t
+        combined_output = o_t
         return dec_state, combined_output, e_t
 
     def generate_sent_masks(self, enc_hiddens: torch.Tensor, source_lengths: List[int]) -> torch.Tensor:

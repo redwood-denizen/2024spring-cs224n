@@ -120,8 +120,6 @@ def question_1d_sanity_check(model, src_sents, tgt_sents, vocab):
     # Configure for Testing
     reinitialize_layers(model)
     source_lengths = [len(s) for s in src_sents]
-    # PaulO:
-    print(src_sents)
     source_padded = model.vocab.src.to_input_tensor(src_sents, device=model.device)
 
     # Load Outputs
