@@ -292,7 +292,7 @@ class NMT(nn.Module):
         for Y_t in torch.split(Y,1):  # (1, b, e)
             Y_t = torch.squeeze(Y_t, dim=0)  # (b, e)
             Ybar_t = torch.cat((Y_t, o_prev), dim=-1)  # (b, e + h)
-            dec_state, combined_output, e_t = self.stepp(Ybar_t, dec_state, enc_hiddens, enc_hiddens_proj, enc_masks)
+            dec_state, combined_output, e_t = self.step(Ybar_t, dec_state, enc_hiddens, enc_hiddens_proj, enc_masks)
             combined_outputs.append(combined_output)
             o_prev = combined_output
 
@@ -302,7 +302,7 @@ class NMT(nn.Module):
 
         return combined_outputs
 
-    def stepp(self, Ybar_t: torch.Tensor,
+    def step(self, Ybar_t: torch.Tensor,
              dec_state: Tuple[torch.Tensor, torch.Tensor],
              enc_hiddens: torch.Tensor,
              enc_hiddens_proj: torch.Tensor,
