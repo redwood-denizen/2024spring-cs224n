@@ -189,28 +189,19 @@ class NMT(nn.Module):
         ###         https://pytorch.org/docs/stable/generated/torch.permute.html
 
         X = self.model_embeddings.source(source_padded)  # (src_len, b, e)
-        print(f'X.shape (src_len, b, e): {X.shape}')
 
         X = torch.permute(X, (1, 2, 0))  # (b, e, src_len)
-        print(f'X.shape (b, e, src_len): {X.shape}')
         X = self.post_embed_cnn(X)
-        print(f'X.shape (b, e, src_len): {X.shape}')
         X = torch.permute(X, (2, 0, 1))  # (src_len, b, e)
-        print(f'X.shape (src_len, b, e): {X.shape}')
 
         packed_sequence = pack_padded_sequence(X, source_lengths)
         enc_hiddens_packed, (last_hidden, last_cell) = self.encoder(packed_sequence)
         enc_hiddens, enc_hiddens_lens = pad_packed_sequence(enc_hiddens_packed)
-        print(f'enc_hiddens.shape (src_len, b, h*2): {enc_hiddens.shape}')  # (src_len, b, h*2)
         enc_hiddens = torch.permute(enc_hiddens, (1, 0, 2))  # (b, src_len, h*2)
-        print(f'enc_hiddens.shape (b, src_len, h*2): {enc_hiddens.shape}')
 
         # TODO: is the following really getting final hidden and final cell states?
         # supposed to concatenate h1^enc^backward with hm^enc^forward
-        print(f'last_hidden.shape (2, b, h): {last_hidden.shape}')
-        print(f'last_hidden: {last_hidden}')
-        h_enc = torch.cat((last_hidden[0], last_hidden[1]), 1)  # concatenate forwards and backwards
-        print(f'h_enc.shape (b, 2*h): {h_enc.shape}')
+        h_enc = torch.cat((last_hidden[0], last_hidden[1]), 1)  # (b, 2*h) concatenate forwards and backwards
         init_decoder_hidden = self.h_projection(h_enc)
 
         c_enc =torch.cat((last_cell[0], last_cell[1]), 1)
