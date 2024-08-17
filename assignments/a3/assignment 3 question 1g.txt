@@ -1,0 +1,3 @@
+the - infinities become zeros in the softmax operation. the zeros weight the hidden encoder states associated with pads
+so they contribute nothing to the attention output a_t. we use masks in this way to avoid having pad tokens taking on
+unwarranted meaning or significance. we want to focus attention on the actual tokens and words in the sentence.
