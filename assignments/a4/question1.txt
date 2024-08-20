@@ -1,0 +1,22 @@
+1 a) i) if the query and key k_j point in the same direction and have large magnitude while all the other keys point in
+the opposite direction with large magnitudes then alpha_j will be much larger than the other attention weights.
+
+1 a) ii) c will be mostly a copy of v_j (in the same direction, probably not quite as long) with small contributions
+in other directions from the other value vectors.
+
+1 b) let the query have a large positive number l at the same indices as a and b's keys have ones.  then the attention
+scores for v a and b will be e^l/(2e^l +n -2) which gets closer to 1/2 as l increases. all the other value vectors are
+weighted 1/(2e^l + n - 2) which goes to zero as l increases.
+
+1 c) i)
+
+1 c) ii)
+
+1 d) i)
+
+1 d) ii)
+
+1 e)
+
+
+
