@@ -12,8 +12,17 @@ def main():
 
     # Compute accuracy in the range [0.0, 100.0]
     ### YOUR CODE HERE ###
-    pass
-    ### END YOUR CODE ###
+    # pass
+    with open("birth_dev.tsv", encoding='utf-8') as fin:
+        lines = [x.strip().split('\t') for x in fin]
+        if len(lines[0]) == 1:
+            print('No gold birth places provided; returning 0.0')
+            return accuracy
+        true_places = [x[1] for x in lines]
+        total = len(true_places)
+        correct = len(list(filter(lambda x: x == "London", true_places)))
+        accuracy = (float(correct) / float(total)) * 100
+        ### END YOUR CODE ###
 
     return accuracy
 
