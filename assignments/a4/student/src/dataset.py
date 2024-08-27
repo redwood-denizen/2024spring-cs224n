@@ -107,7 +107,7 @@ class CharCorruptionDataset(Dataset):
         doc = doc[0:l]
         # masked segment should average l/4 in length and be no longer than l-2, assuming prefix and suffix are non-empty
         lm = random.randint(1, int(l/2))
-        start = random.randint(2, l-lm-1)
+        start = random.randint(2, l-lm)
         prefix = doc[0:start-1]
         masked_content = doc[start-1:start+lm-1]
         suffix = doc[start+lm-1:]
@@ -141,8 +141,8 @@ class CharCorruptionDataset(Dataset):
 
 class NameDataset(Dataset):
     def __init__(self, pretraining_dataset, data):
-        self.MASK_CHAR = "\u2047" # the doublequestionmark character, for mask
-        self.PAD_CHAR = "\u25A1" # the empty square character, for pad
+        self.MASK_CHAR = "\u2047"  # the doublequestionmark character, for mask
+        self.PAD_CHAR = "\u25A1"  # the empty square character, for pad
         self.itos = pretraining_dataset.itos
         self.stoi = pretraining_dataset.stoi
         self.block_size = pretraining_dataset.block_size

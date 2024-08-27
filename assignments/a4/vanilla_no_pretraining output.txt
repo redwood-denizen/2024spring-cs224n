@@ -1,0 +1,114 @@
+2024-08-26 22:15:43.349095: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:485] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2024-08-26 22:15:43.381482: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:8454] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2024-08-26 22:15:43.391479: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1452] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2024-08-26 22:15:43.414600: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-08-26 22:15:44.549731: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+data has 418351 characters, 256 unique.
+number of parameters: 3323392
+Model on device:  cuda:0
+/usr/lib/python3.10/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+epoch 1 iter 7: train loss 3.47233. lr 5.999844e-04: 100% 8/8 [00:03<00:00,  2.61it/s]
+epoch 2 iter 7: train loss 2.78496. lr 5.999351e-04: 100% 8/8 [00:02<00:00,  3.75it/s]
+epoch 3 iter 7: train loss 2.40154. lr 5.998520e-04: 100% 8/8 [00:02<00:00,  3.68it/s]
+epoch 4 iter 7: train loss 2.22746. lr 5.997351e-04: 100% 8/8 [00:02<00:00,  3.60it/s]
+epoch 5 iter 7: train loss 2.11792. lr 5.995844e-04: 100% 8/8 [00:02<00:00,  3.63it/s]
+epoch 6 iter 7: train loss 2.04757. lr 5.993999e-04: 100% 8/8 [00:02<00:00,  3.75it/s]
+epoch 7 iter 7: train loss 1.99111. lr 5.991818e-04: 100% 8/8 [00:02<00:00,  3.71it/s]
+epoch 8 iter 7: train loss 1.92861. lr 5.989299e-04: 100% 8/8 [00:02<00:00,  3.72it/s]
+epoch 9 iter 7: train loss 1.87280. lr 5.986444e-04: 100% 8/8 [00:02<00:00,  3.67it/s]
+epoch 10 iter 7: train loss 1.81532. lr 5.983252e-04: 100% 8/8 [00:02<00:00,  3.52it/s]
+epoch 11 iter 7: train loss 1.78292. lr 5.979723e-04: 100% 8/8 [00:02<00:00,  3.61it/s]
+epoch 12 iter 7: train loss 1.70100. lr 5.975860e-04: 100% 8/8 [00:02<00:00,  3.72it/s]
+epoch 13 iter 7: train loss 1.64526. lr 5.971660e-04: 100% 8/8 [00:02<00:00,  3.69it/s]
+epoch 14 iter 7: train loss 1.58421. lr 5.967127e-04: 100% 8/8 [00:02<00:00,  3.71it/s]
+epoch 15 iter 7: train loss 1.47569. lr 5.962258e-04: 100% 8/8 [00:02<00:00,  3.64it/s]
+epoch 16 iter 7: train loss 1.42300. lr 5.957056e-04: 100% 8/8 [00:02<00:00,  3.68it/s]
+epoch 17 iter 7: train loss 1.34960. lr 5.951521e-04: 100% 8/8 [00:02<00:00,  3.67it/s]
+epoch 18 iter 7: train loss 1.26156. lr 5.945654e-04: 100% 8/8 [00:02<00:00,  3.70it/s]
+epoch 19 iter 7: train loss 1.20264. lr 5.939454e-04: 100% 8/8 [00:02<00:00,  3.70it/s]
+epoch 20 iter 7: train loss 1.15547. lr 5.932923e-04: 100% 8/8 [00:02<00:00,  3.68it/s]
+epoch 21 iter 7: train loss 1.07816. lr 5.926062e-04: 100% 8/8 [00:02<00:00,  3.67it/s]
+epoch 22 iter 7: train loss 1.03469. lr 5.918871e-04: 100% 8/8 [00:02<00:00,  3.52it/s]
+epoch 23 iter 7: train loss 0.98423. lr 5.911352e-04: 100% 8/8 [00:02<00:00,  3.56it/s]
+epoch 24 iter 7: train loss 0.95901. lr 5.903504e-04: 100% 8/8 [00:02<00:00,  3.67it/s]
+epoch 25 iter 7: train loss 0.91206. lr 5.895329e-04: 100% 8/8 [00:02<00:00,  3.66it/s]
+epoch 26 iter 7: train loss 0.84510. lr 5.886828e-04: 100% 8/8 [00:02<00:00,  3.61it/s]
+epoch 27 iter 7: train loss 0.82929. lr 5.878002e-04: 100% 8/8 [00:02<00:00,  3.61it/s]
+epoch 28 iter 7: train loss 0.79534. lr 5.868851e-04: 100% 8/8 [00:02<00:00,  3.58it/s]
+epoch 29 iter 7: train loss 0.78385. lr 5.859378e-04: 100% 8/8 [00:02<00:00,  3.41it/s]
+epoch 30 iter 7: train loss 0.79034. lr 5.849582e-04: 100% 8/8 [00:02<00:00,  3.59it/s]
+epoch 31 iter 7: train loss 0.73141. lr 5.839465e-04: 100% 8/8 [00:02<00:00,  3.63it/s]
+epoch 32 iter 7: train loss 0.73405. lr 5.829028e-04: 100% 8/8 [00:02<00:00,  3.62it/s]
+epoch 33 iter 7: train loss 0.69110. lr 5.818272e-04: 100% 8/8 [00:02<00:00,  3.62it/s]
+epoch 34 iter 7: train loss 0.69796. lr 5.807199e-04: 100% 8/8 [00:02<00:00,  3.58it/s]
+epoch 35 iter 7: train loss 0.69630. lr 5.795810e-04: 100% 8/8 [00:02<00:00,  3.49it/s]
+epoch 36 iter 7: train loss 0.66692. lr 5.784106e-04: 100% 8/8 [00:02<00:00,  3.51it/s]
+epoch 37 iter 7: train loss 0.66261. lr 5.772087e-04: 100% 8/8 [00:02<00:00,  3.57it/s]
+epoch 38 iter 7: train loss 0.63459. lr 5.759757e-04: 100% 8/8 [00:02<00:00,  3.59it/s]
+epoch 39 iter 7: train loss 0.60923. lr 5.747116e-04: 100% 8/8 [00:02<00:00,  3.59it/s]
+epoch 40 iter 7: train loss 0.59298. lr 5.734165e-04: 100% 8/8 [00:02<00:00,  3.52it/s]
+epoch 41 iter 7: train loss 0.58489. lr 5.720906e-04: 100% 8/8 [00:02<00:00,  3.42it/s]
+epoch 42 iter 7: train loss 0.57858. lr 5.707341e-04: 100% 8/8 [00:02<00:00,  3.49it/s]
+epoch 43 iter 7: train loss 0.57164. lr 5.693470e-04: 100% 8/8 [00:02<00:00,  3.56it/s]
+epoch 44 iter 7: train loss 0.53205. lr 5.679296e-04: 100% 8/8 [00:02<00:00,  3.56it/s]
+epoch 45 iter 7: train loss 0.51528. lr 5.664820e-04: 100% 8/8 [00:02<00:00,  3.52it/s]
+epoch 46 iter 7: train loss 0.54110. lr 5.650044e-04: 100% 8/8 [00:02<00:00,  3.48it/s]
+epoch 47 iter 7: train loss 0.49373. lr 5.634970e-04: 100% 8/8 [00:02<00:00,  3.45it/s]
+epoch 48 iter 7: train loss 0.48431. lr 5.619598e-04: 100% 8/8 [00:02<00:00,  3.38it/s]
+epoch 49 iter 7: train loss 0.47027. lr 5.603932e-04: 100% 8/8 [00:02<00:00,  3.51it/s]
+epoch 50 iter 7: train loss 0.47050. lr 5.587972e-04: 100% 8/8 [00:02<00:00,  3.48it/s]
+epoch 51 iter 7: train loss 0.45315. lr 5.571720e-04: 100% 8/8 [00:02<00:00,  3.53it/s]
+epoch 52 iter 7: train loss 0.44932. lr 5.555179e-04: 100% 8/8 [00:02<00:00,  3.46it/s]
+epoch 53 iter 7: train loss 0.44261. lr 5.538350e-04: 100% 8/8 [00:02<00:00,  3.35it/s]
+epoch 54 iter 7: train loss 0.41996. lr 5.521235e-04: 100% 8/8 [00:02<00:00,  3.43it/s]
+epoch 55 iter 7: train loss 0.39718. lr 5.503835e-04: 100% 8/8 [00:02<00:00,  3.51it/s]
+epoch 56 iter 7: train loss 0.38274. lr 5.486154e-04: 100% 8/8 [00:02<00:00,  3.49it/s]
+epoch 57 iter 7: train loss 0.40543. lr 5.468193e-04: 100% 8/8 [00:02<00:00,  3.51it/s]
+epoch 58 iter 7: train loss 0.37984. lr 5.449953e-04: 100% 8/8 [00:02<00:00,  3.49it/s]
+epoch 59 iter 7: train loss 0.37723. lr 5.431438e-04: 100% 8/8 [00:02<00:00,  3.47it/s]
+epoch 60 iter 7: train loss 0.37686. lr 5.412648e-04: 100% 8/8 [00:02<00:00,  3.44it/s]
+epoch 61 iter 7: train loss 0.35916. lr 5.393587e-04: 100% 8/8 [00:02<00:00,  3.50it/s]
+epoch 62 iter 7: train loss 0.37312. lr 5.374256e-04: 100% 8/8 [00:02<00:00,  3.45it/s]
+epoch 63 iter 7: train loss 0.34550. lr 5.354657e-04: 100% 8/8 [00:02<00:00,  3.49it/s]
+epoch 64 iter 7: train loss 0.33223. lr 5.334794e-04: 100% 8/8 [00:02<00:00,  3.45it/s]
+epoch 65 iter 7: train loss 0.33011. lr 5.314667e-04: 100% 8/8 [00:02<00:00,  3.37it/s]
+epoch 66 iter 7: train loss 0.30978. lr 5.294279e-04: 100% 8/8 [00:02<00:00,  3.39it/s]
+epoch 67 iter 7: train loss 0.30731. lr 5.273633e-04: 100% 8/8 [00:02<00:00,  3.49it/s]
+epoch 68 iter 7: train loss 0.28780. lr 5.252731e-04: 100% 8/8 [00:02<00:00,  3.47it/s]
+epoch 69 iter 7: train loss 0.26909. lr 5.231575e-04: 100% 8/8 [00:02<00:00,  3.50it/s]
+epoch 70 iter 7: train loss 0.26703. lr 5.210167e-04: 100% 8/8 [00:02<00:00,  3.44it/s]
+epoch 71 iter 7: train loss 0.25880. lr 5.188511e-04: 100% 8/8 [00:02<00:00,  3.32it/s]
+epoch 72 iter 7: train loss 0.22756. lr 5.166608e-04: 100% 8/8 [00:02<00:00,  3.46it/s]
+epoch 73 iter 7: train loss 0.23001. lr 5.144461e-04: 100% 8/8 [00:02<00:00,  3.45it/s]
+epoch 74 iter 7: train loss 0.23175. lr 5.122072e-04: 100% 8/8 [00:02<00:00,  3.48it/s]
+epoch 75 iter 7: train loss 0.19671. lr 5.099444e-04: 100% 8/8 [00:02<00:00,  3.49it/s]
+Model saved to vanilla.model.params
+2024-08-26 22:18:45.355032: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:485] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2024-08-26 22:18:45.374970: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:8454] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2024-08-26 22:18:45.380823: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1452] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2024-08-26 22:18:45.394839: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-08-26 22:18:46.584448: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+data has 418351 characters, 256 unique.
+number of parameters: 3323392
+Model on device:  cuda:0
+/content/drive/MyDrive/a4/student/src/run.py:177: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(args.reading_params_path))
+500it [00:50,  9.95it/s]
+Correct: 9.0 out of 500.0: 1.7999999999999998%
+2024-08-26 22:19:41.870317: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:485] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2024-08-26 22:19:41.889628: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:8454] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2024-08-26 22:19:41.895589: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1452] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2024-08-26 22:19:41.909524: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-08-26 22:19:43.011063: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+data has 418351 characters, 256 unique.
+number of parameters: 3323392
+Model on device:  cuda:0
+/content/drive/MyDrive/a4/student/src/run.py:177: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load(args.reading_params_path))
+437it [00:44,  9.88it/s]
+No gold birth places provided; returning (0,0)
+Predictions written to vanilla.nopretrain.test.predictions; no targets provided
