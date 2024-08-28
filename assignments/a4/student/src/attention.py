@@ -70,7 +70,7 @@ def apply_rotary_emb(x, rope_cache):
     ### YOUR CODE HERE ###
     # pass
     # print(f'RoTATING: {x}')
-    # print(f'shape(x) = {x.size()}')
+    # print(f'RoTating x shape(x) = {x.size()}')
     # print(f'shape(rope_cache) = {rope_cache.size()}')
     B, T, d = x.size()
     assert d % 2 == 0
@@ -78,7 +78,7 @@ def apply_rotary_emb(x, rope_cache):
     #     rope_cache = rope_cache[:, :, :len(x)]
     complex_rope_cache = torch.view_as_complex(rope_cache)  # (T, d/2)
     complex_x = torch.view_as_complex(x.view(B, T, int(d/2), 2))  # (B, T, d/2)
-    complex_rotated_x = torch.rand_like(complex_x)
+    complex_rotated_x = torch.zeros_like(complex_x)
     for b in range(B):
         for t in range(T):
             complex_rotated_x[b,t] = complex_rope_cache[t] * complex_x[b,t]
@@ -113,7 +113,7 @@ class CausalSelfAttention(nn.Module):
             rope_cache = None
             ### YOUR CODE HERE ###
             # pass
-            self.rope_cache = precompute_rotary_emb(config.n_embd, config.block_size)
+            rope_cache = precompute_rotary_emb(config.n_embd, config.block_size)
             ### END YOUR CODE ###
 
             self.register_buffer("rope_cache", rope_cache)
@@ -140,8 +140,8 @@ class CausalSelfAttention(nn.Module):
             # TODO: [part g] Apply RoPE to the query and key.
             ### YOUR CODE HERE ###
             # pass
-            q = apply_rotary_emb(q, self.rope_cache)
-            k = apply_rotary_emb(k, self.rope_cache)
+            q = apply_rotary_emb(self.query(x), self.rope_cache).view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
+            k = apply_rotary_emb(self.key(x), self.rope_cache).view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
             ### END YOUR CODE ###
 
         # causal self-attention; Self-attend: (B, nh, T, hs) x (B, nh, hs, T) -> (B, nh, T, T)
