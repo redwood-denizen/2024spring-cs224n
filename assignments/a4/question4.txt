@@ -1,0 +1,13 @@
+4 a) the pretrained model was able to "remember" birth places present in wikipedia but not present in the fine tuning data.
+4 b) one reason the fact that we sometimes can't tell whether models retrieve information or make it up is problematic
+is that users can be misled into thinking that something that is not true is true. For example, chatgpt claimed there
+was a solenoid separate from the EGR valve in my car when in fact they are in the same unit and I could have been misled
+into trying to find it elsewhere in the car. even when the model is retrieving information in it's training data,
+it can be problematic if the data itself is false, as for example when chatgpt gives Obama's birthplace as Kenya.
+another concern is that we cannot trust models that can hallucinate and so
+may not be willing to use them and benefit from them. an example of this is my son, who has so far refused to use
+chatgpt or claude because they are not trustworthy, so my son is not benefitting from the things they can do well.
+4 c) the model could be predicting British or English birth locations such as London because they appear more frequently
+in the English
+language version of wikipedia, especially for British first and last names. This is a sort of bias or stereotyping that
+may reflect wikipedia but which does not reflect the true diversity of the world's population and could even be racist.

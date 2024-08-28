@@ -38,7 +38,17 @@ def precompute_rotary_emb(dim, max_positions):
     rope_cache = None
     # TODO: [part g]
     ### YOUR CODE HERE ###
-    pass
+    # pass
+
+    def theta(i):
+        return 1/10000**(-2*(i-1)/dim)
+
+    assert dim % 2 == 0
+    rope_cache = torch.zeros(max_positions, int(dim/2), 2)
+    for t in range(max_positions):
+        for i in range(int(dim/2)):
+            rope_cache[t, i, 0] = math.cos((t+1) * theta(i+1))
+            rope_cache[t, i, 1] = math.sin((t+1) * theta(i+1))
     ### END YOUR CODE ###
     return rope_cache
 
@@ -58,7 +68,23 @@ def apply_rotary_emb(x, rope_cache):
 
     rotated_x = None
     ### YOUR CODE HERE ###
-    pass
+    # pass
+    # print(f'RoTATING: {x}')
+    # print(f'shape(x) = {x.size()}')
+    # print(f'shape(rope_cache) = {rope_cache.size()}')
+    B, T, d = x.size()
+    assert d % 2 == 0
+    # if d < len(rope_cache):
+    #     rope_cache = rope_cache[:, :, :len(x)]
+    complex_rope_cache = torch.view_as_complex(rope_cache)  # (T, d/2)
+    complex_x = torch.view_as_complex(x.view(B, T, int(d/2), 2))  # (B, T, d/2)
+    complex_rotated_x = torch.rand_like(complex_x)
+    for b in range(B):
+        for t in range(T):
+            complex_rotated_x[b,t] = complex_rope_cache[t] * complex_x[b,t]
+
+    rotated_x = torch.view_as_real(complex_rotated_x).view(B, T, d)
+
     ### END YOUR CODE ###
     return rotated_x
 
@@ -86,7 +112,8 @@ class CausalSelfAttention(nn.Module):
             # Hint: The maximum sequence length is given by config.block_size.
             rope_cache = None
             ### YOUR CODE HERE ###
-            pass
+            # pass
+            self.rope_cache = precompute_rotary_emb(config.n_embd, config.block_size)
             ### END YOUR CODE ###
 
             self.register_buffer("rope_cache", rope_cache)
@@ -112,7 +139,9 @@ class CausalSelfAttention(nn.Module):
         if self.rope:
             # TODO: [part g] Apply RoPE to the query and key.
             ### YOUR CODE HERE ###
-            pass
+            # pass
+            q = apply_rotary_emb(q, self.rope_cache)
+            k = apply_rotary_emb(k, self.rope_cache)
             ### END YOUR CODE ###
 
         # causal self-attention; Self-attend: (B, nh, T, hs) x (B, nh, hs, T) -> (B, nh, T, T)
