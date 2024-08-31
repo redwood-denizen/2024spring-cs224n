@@ -69,16 +69,13 @@ def apply_rotary_emb(x, rope_cache):
     rotated_x = None
     ### YOUR CODE HERE ###
     # pass
-    # print(f'RoTATING: {x}')
-    # print(f'RoTating x shape(x) = {x.size()}')
-    # print(f'shape(rope_cache) = {rope_cache.size()}')
-
     B, T, d = x.size()
     max_positions, _, _ = rope_cache.size()  # (max_positions, dim/2, 2)
     assert d % 2 == 0
     if T < max_positions:
-        print(f'Truncating rope_cache from max_positions={max_positions} to T={T}')
-        rope_cache = rope_cache[:, :T, :]
+        print(f'T={T} < max_positions={max_positions}. NEED TO TRUNCATE rope_cache?')
+    #    print(f'Truncating rope_cache from max_positions={max_positions} to T={T}')
+    #    rope_cache = rope_cache[:, :T, :]
     complex_rope_cache = torch.view_as_complex(rope_cache)  # (T, d/2)
     complex_x = torch.view_as_complex(x.view(B, T, int(d/2), 2))  # (B, T, d/2)
     complex_rotated_x = complex_x * complex_rope_cache
